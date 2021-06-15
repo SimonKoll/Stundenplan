@@ -1,0 +1,23 @@
+<h1>Stundenplan</h1>
+<select [ngModel]="currentSchoolclass.id" name="schoolclasses" (change)="getNewTimetable($event)">
+  <option *ngFor="let c of schoolclasses" [value]="c.id">{{c.id}}</option>
+</select>
+<button (click)="save()">Save</button>
+
+<table>
+  <thead>
+  <tr>
+    <th></th>
+    <th *ngFor="let d of days;">{{d}}</th>
+  </tr>
+    <tr *ngFor="let i of hours">
+      <th>{{i == 0 ? '': i}}</th>
+      <th *ngFor="let d of days; index as j" [style.background-color]="getUnit(i, j).hasChanged ? 'red' : 'white'">
+        <input type="text" name="subject" [(ngModel)]="getUnit(i, j).subject" (input)="getUnit(i, j).hasChanged = true"><br>
+        <select name="teacher" [(ngModel)]="getUnit(i, j).teacherID" (change)="getUnit(i, j).hasChanged = true">
+          <option *ngFor="let teacher of teachers" [value]="teacher.id">{{teacher.lastname}}</option>
+        </select>
+      </th>
+    </tr>
+  </thead>
+</table>
